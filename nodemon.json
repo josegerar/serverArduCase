@@ -1,0 +1,7 @@
+{
+    "env": {
+        "MONGO_USER": "bmendozav",
+        "MONGO_PASSWORD": "bdmv1312403121996",
+        "MONGO_DB": "arduCase"
+    }
+}
