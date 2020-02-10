@@ -50,6 +50,7 @@ input ProjectUpdate {
 input ProjectSave {
     projectId: ID!
     canvasJSON: String!
+    especJSON: String!
     lastAccessDate: String!
     lastUpdateDate: String!
     image: String!
