@@ -8,9 +8,10 @@ module.exports = {
     projects: async () => {
         try {
             const projects = await Project.find();
-            return await projects.map(project => {
+            const proys =  await projects.map(project => {
                 return transformProject(project);
             });
+            return proys;
         } catch (err) {
             throw err;
         }
@@ -95,6 +96,7 @@ module.exports = {
                         canvasJSON: args.projectSave.canvasJSON,
                         lastAccessDate: dateToString(args.projectSave.lastAccessDate),
                         lastUpdateDate: dateToString(args.projectSave.lastUpdateDate),
+                        especJSON: args.projectSave.especJSON,
                         image: args.projectSave.image
                     }
                 },
