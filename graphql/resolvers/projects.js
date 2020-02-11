@@ -8,7 +8,7 @@ module.exports = {
     projects: async () => {
         try {
             const projects = await Project.find();
-            const proys =  await projects.map(project => {
+            const proys = await projects.map(project => {
                 return transformProject(project);
             });
             return proys;
@@ -105,6 +105,38 @@ module.exports = {
             )
         } catch (err) {
             throw err;
+        }
+    },
+    addEmailsProyect: async (args, req) => {
+        try {
+            console.log(args);
+            if (args.projectId) {
+                await Project.findOneAndUpdate({ _id: args.projectId }, {
+                    $set: {
+                        sharedUsers: args.emails
+                    }
+                },
+                    {
+                        useFindAndModify: false
+                    }
+                ,(err, doc , res)=>{
+                    if (doc) {
+                        args.emails.map(val => {
+                            User.find({email: val},(err, res)=>{
+                                if (res.length===1) {
+                                    res[0].sharedProjects.push(doc);
+                                    res[0].save();
+                                }
+                            }).limit(1);
+                        });
+                    }
+                }).exec();
+            }
+        } catch (error) {
+            console.log(error);
+
+            throw error;
+
         }
     }
 };

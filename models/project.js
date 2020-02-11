@@ -38,7 +38,12 @@ const projectSchema = new Schema({
     especJSON: {
         type: String,
         required: true
-    }
+    },
+    sharedUsers:[
+        {
+            type: Schema.Types.String,
+        }
+    ]
 });
 
 module.exports = mongoose.model('Project', projectSchema);

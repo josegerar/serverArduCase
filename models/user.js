@@ -24,6 +24,12 @@ const userSchema = new Schema({
             type: Schema.Types.ObjectId,
             ref: 'Project'
         }
+    ],
+    sharedProjects:[
+        {
+            type: Schema.Types.ObjectId,
+            ref: 'Project'
+        }
     ]
 });
 

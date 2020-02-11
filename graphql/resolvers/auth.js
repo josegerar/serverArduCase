@@ -2,6 +2,7 @@ const bcrypt = require('bcryptjs');
 const jwt = require('jsonwebtoken');
 
 const User = require('../../models/user');
+const Proyect = require("../../models/project");
 
 module.exports = {
     createUser: async args => {
@@ -23,12 +24,24 @@ module.exports = {
                 email: args.userInput.email
             })
             const result = await user.save();
+            const proyects= Proyect.find();
+            proyects.map(proyect =>{
+                console.log(proyect);
+                proyect.sharedUsers.map(shared=>{
+                    if (shared == args.userInput.email) {
+                        user.sharedProjects.push(proyect);
+                        user.save();
+                    }
+                });
+            });
             return { ...result._doc, password: "null", _id: result.id }
         } catch (err) {
             throw err;
         }
     },
     login: async ({ username, password }) => {
+        console.log("e");
+        
         const user = await User.findOne({ username: username });
         if (!user) {
             throw new Error('User does not exist!');
@@ -37,9 +50,9 @@ module.exports = {
         if (!isEqual) {
             throw new Error('Password is incorrect!');
         }
-        const token = jwt.sign({ userId: user.id, username: user.username }, 'somesupersecretkey', {
+        const token = jwt.sign({ userId: user.id, username: user.username, email: user.email }, 'somesupersecretkey', {
             expiresIn: '1h'
         });
-        return { userId: user.id, token: token, tokenExpiration: 1 };
+        return {token: token};
     }
 };

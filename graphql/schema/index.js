@@ -12,6 +12,7 @@ type Project {
     creator: User!
     canvasJSON: String!
     especJSON: String!
+    sharedUsers: [String!]
 }
 
 type User {
@@ -21,12 +22,11 @@ type User {
     password: String!
     email: String!
     createdProjects: [Project!]
+    sharedProjects: [Project!]
 }
 
 type AuthData {
-    userId: ID!
     token: String!
-    tokenExpiration: Int!
 }
 
 input ProjectInput {
@@ -73,6 +73,7 @@ type RootMutation {
     createUser(userInput: UserInput): User
     deleteProject(projectId: ID!): User
     updateProject(projectUpdate: ProjectUpdate): Project
+    addEmailsProyect(emails: [String!]! , projectId: ID!): Project
     saveProject(projectSave: ProjectSave): Project
 }
 
