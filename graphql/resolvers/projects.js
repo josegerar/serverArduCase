@@ -85,7 +85,6 @@ module.exports = {
             if (!req.isAuth) {
                 throw new Error('Unaunthenticated!');
             }
-
             await Project.findOneAndUpdate(
                 {
                     _id: args.projectSave.projectId
@@ -109,7 +108,6 @@ module.exports = {
     },
     addEmailsProyect: async (args, req) => {
         try {
-            console.log(args);
             if (args.projectId) {
                 await Project.findOneAndUpdate({ _id: args.projectId }, {
                     $set: {
@@ -134,9 +132,7 @@ module.exports = {
             }
         } catch (error) {
             console.log(error);
-
             throw error;
-
         }
     }
 };

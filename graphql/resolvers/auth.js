@@ -26,7 +26,6 @@ module.exports = {
             const result = await user.save();
             const proyects= Proyect.find();
             proyects.map(proyect =>{
-                console.log(proyect);
                 proyect.sharedUsers.map(shared=>{
                     if (shared == args.userInput.email) {
                         user.sharedProjects.push(proyect);
@@ -40,8 +39,6 @@ module.exports = {
         }
     },
     login: async ({ username, password }) => {
-        console.log("e");
-        
         const user = await User.findOne({ username: username });
         if (!user) {
             throw new Error('User does not exist!');
